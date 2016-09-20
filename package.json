@@ -1,0 +1,16 @@
+{
+  "name": "ts-event-handlers-lite",
+  "version": "0.1.0",
+  "description": "TypeScript event listener management - synchronous, asynchronous, event queuing, and more",
+  "dependencies": {
+    "q": "^1.4.1"
+  },
+  "devDependencies": {
+    "chai": "~3.5.0",
+    "mocha": "~3.0.2",
+    "typescript": "~1.8.9"
+  },
+  "scripts": {
+    "test": "mocha -u tdd --recursive"
+  }
+}
