@@ -36,7 +36,11 @@ var EventQueue = (function () {
         if (this.hasQueuedEvents()) {
             console.error("reseting event queue with events still in queue", this.events);
         }
+        var successCb = this.eventHandler.getFireEventsSuccessCallback();
+        var failureCb = this.eventHandler.getFireEventsFailureCallback();
         this.eventHandler.reset();
+        this.eventHandler.setFireEventsSuccessCallback(successCb);
+        this.eventHandler.setFireEventsFailureCallback(failureCb);
     };
     /** @return {EventListenerHandler} this event queue's event handler */
     EventQueue.prototype.getEventHandler = function () {

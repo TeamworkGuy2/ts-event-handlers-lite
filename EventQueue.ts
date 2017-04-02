@@ -51,7 +51,11 @@ class EventQueue<E, L extends (...args: any[]) => void> implements Events.EventQ
         if (this.hasQueuedEvents()) {
             console.error("reseting event queue with events still in queue", this.events);
         }
+        var successCb = this.eventHandler.getFireEventsSuccessCallback();
+        var failureCb = this.eventHandler.getFireEventsFailureCallback();
         this.eventHandler.reset();
+        this.eventHandler.setFireEventsSuccessCallback(successCb);
+        this.eventHandler.setFireEventsFailureCallback(failureCb);
     }
 
 

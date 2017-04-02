@@ -103,11 +103,11 @@ var EventListenerList = (function () {
         var that = this;
         var errorOccurred = false;
         var useCustomCaller = (typeof customListenerCaller === "function");
-        function callListenerProxy(listener, thisArg, args, i, size) {
+        function callListenerProxy(listener, thisArg, args, k, size) {
             var res = null;
             try {
                 if (useCustomCaller) {
-                    res = customListenerCaller(listener, args, i, size);
+                    res = customListenerCaller(listener, args, k, size);
                 }
                 else {
                     res = listener.apply(thisArg, args);
@@ -126,27 +126,30 @@ var EventListenerList = (function () {
         }
         var params = [event];
         var results = [];
-        for (var listenerI = that.listeners.length - 1, listenerCount = that.listeners.length; listenerI > -1 && !errorOccurred; listenerI--) {
-            var listener = that.listeners[listenerI];
-            var remainingCallCount = that.listenerCallsUntilRemoval[listenerI];
+        for (var listenerCount = that.listeners.length, i = listenerCount - 1; i > -1; i--) {
+            var listener = that.listeners[i];
+            var remainingCallCount = that.listenerCallsUntilRemoval[i];
             if (remainingCallCount > 0) {
-                that.listenerCallsUntilRemoval[listenerI]--;
+                that.listenerCallsUntilRemoval[i]--;
                 remainingCallCount--;
             }
             var res = null;
             if (typeof listener === "function") {
-                res = callListenerProxy(listener, undefined, params, listenerI, listenerCount);
+                res = callListenerProxy(listener, undefined, params, i, listenerCount);
+                if (errorOccurred) {
+                    break;
+                }
             }
             results.push(res);
             if (remainingCallCount === 0) {
-                that.removeListenerAt(listenerI);
+                that.removeListenerAt(i);
             }
         }
         if (typeof customListenerCallsDoneCb === "function") {
             customListenerCallsDoneCb(event);
         }
         else {
-            if (typeof that.fireEventsSuccessCallback === "function") {
+            if (!errorOccurred && typeof that.fireEventsSuccessCallback === "function") {
                 that.fireEventsSuccessCallback(results);
             }
         }

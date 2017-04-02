@@ -32,6 +32,10 @@ suite("EventListenerList", function ArraysTest() {
         ell.fireEvent({ name: "four", chance: 0.6 });
         ell.fireEvent({ name: "five", chance: 0.8 });
 
+        ell.reset();
+
+        ell.fireEvent({ name: "six", chance: 1 });
+
         asr.equal(all, 5);
         asr.equal(once, 1);
         asr.equal(twice, 2);
@@ -41,12 +45,17 @@ suite("EventListenerList", function ArraysTest() {
 
     test("addAndRemoveListener", function addAndRemoveListenerTest() {
         var ell = createListenerList();
+        var added = 0;
+        var removed = 0;
         var aC = 0;
         var bC = 0;
         var cC = 0;
         var lstA = function a() { aC++; };
         var lstB = function b() { bC++; };
         var lstC = function c() { cC++; };
+
+        ell.setListenerAddedCallback(() => added++);
+        ell.setListenerRemovedCallback(() => removed++);
 
         ell.addListener(lstA);
         ell.addListener(lstB);
@@ -57,6 +66,27 @@ suite("EventListenerList", function ArraysTest() {
         ell.addListener(lstC);
 
         asr.deepEqual(ell.getListeners().sort(sortNames), [lstB, lstC]);
+
+        asr.equal(added, 3);
+        asr.equal(removed, 1);
     });
+
+
+    test("fireEvents", function fireEventsTest() {
+        var ell = createListenerList();
+        var success = 0;
+        var failure = 0;
+        ell.setFireEventsSuccessCallback(() => success++);
+        ell.setFireEventsFailureCallback(() => failure++);
+
+        ell.addListener((evt) => evt.chance);
+
+        ell.fireEvent({ name: "1", chance: 0.1 });
+        ell.fireEvent({ name: "3", chance: 0.3 });
+        ell.fireEvent({ name: "1", get chance(): number { throw new Error("event 3 failure"); } });
+
+        asr.equal(success, 2);
+        asr.equal(failure, 1);
+    })
 
 });
