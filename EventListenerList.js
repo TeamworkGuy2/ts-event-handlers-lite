@@ -48,7 +48,7 @@ var EventListenerList = (function () {
         this.listenerRemovedCallback = cb;
     };
     /** Add a listener function that is called whenever a new customer is added to the bid via the UI
-     * @param {Function(customer, bidId)} listener: a listener function that is passed the new customer added to the bid
+     * @param listener a listener function that is passed the new customer added to the bid
      */
     EventListenerList.prototype.addListener = function (listener) {
         this.addNTimeListener(-1, listener);
@@ -74,7 +74,7 @@ var EventListenerList = (function () {
         }
     };
     /** Remove a listener function from being called whenever a new customer is added to a bid via the UI
-     * @param {Function} listener: a listener that was previously registered with this GenericEventListenerHandler via {code addListener(listener)}
+     * @param listener a listener function that was previously registered with this GenericEventListenerHandler via 'addListener(listener)'
      */
     EventListenerList.prototype.removeListener = function (listener) {
         if (typeof listener !== "function") {
@@ -96,7 +96,7 @@ var EventListenerList = (function () {
     /**
      * @param event: the event to pass to the event listener functions
      * @param customListenerCaller: a function call that takes a listener and event and should fire that event to the listener,
-     * overrides this handler default behavior {@code listener.apply(thisArg, args);}
+     * overrides this handler default behavior 'listener.apply(thisArg, args)'
      * @param customListenerCallsDoneCb: if provided, a function to call when all the listeners have been called, in place of 'this.fireEventsSuccessCallback'
      */
     EventListenerList.prototype.fireEvent = function (event, customListenerCaller, customListenerCallsDoneCb) {

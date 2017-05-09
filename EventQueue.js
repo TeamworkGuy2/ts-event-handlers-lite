@@ -42,7 +42,7 @@ var EventQueue = (function () {
         this.eventHandler.setFireEventsSuccessCallback(successCb);
         this.eventHandler.setFireEventsFailureCallback(failureCb);
     };
-    /** @return {EventListenerHandler} this event queue's event handler */
+    /** @return this event queue's event handler */
     EventQueue.prototype.getEventHandler = function () {
         return this.eventHandler;
     };
@@ -59,7 +59,7 @@ var EventQueue = (function () {
     };
     /** Add an event to this change handler's queue of current events, the event is fired after any
      * currently pending events and before any future events are fired using this function.
-     * However, none of these calls are made until {@code fireExistingEvents()} is called
+     * However, none of these calls are made until 'fireExistingEvents()' is called
      */
     EventQueue.prototype.queueChangeEvent = function (event) {
         if (event == null) {
@@ -70,7 +70,7 @@ var EventQueue = (function () {
         }
         this.events.push(event);
     };
-    /** Fire all current events in this event queue and call {@code doneCb} when
+    /** Fire all current events in this event queue and call 'doneCb' when
      * all the event listeners have completed
      */
     EventQueue.prototype.fireExistingEvents = function (doneCb) {

@@ -1,4 +1,4 @@
-﻿/// <reference path="../definitions/q/Q.d.ts" />
+﻿/// <reference types="q" />
 
 declare module Events {
 
@@ -39,11 +39,11 @@ declare module Events {
 
         /** Add an event to this change handler's queue of current events, the event is fired after any
          * currently pending events and before any future events are fired using this function.
-         * However, none of these calls are made until {@code fireExistingEvents()} is called
+         * However, none of these calls are made until 'fireExistingEvents()' is called
          */
         queueChangeEvent(event: E): void;
 
-        /** Fire all current events in this event queue and call {@code doneCb} when
+        /** Fire all current events in this event queue and call 'doneCb' when
          * all the event listeners have completed
          */
         fireExistingEvents(doneCb?: () => void): void;
@@ -75,7 +75,7 @@ declare module Events {
         setListenerRemovedCallback(cb: (listener: L) => void);
 
         /** Add a listener function that is called whenever a new customer is added to the bid via the UI
-         * @param {Function(customer, bidId)} listener: a listener function that is passed the new customer added to the bid
+         * @param listener a listener function that is passed the new customer added to the bid
          */
         addListener(listener: L);
 
@@ -84,17 +84,17 @@ declare module Events {
         addNTimeListener(removeAfterNCalls: number, listener: L);
 
         /** Remove a listener function from being called whenever a new customer is added to a bid via the UI
-         * @param {Function} listener: a listener that was previously registered with this GenericEventListenerHandler via {code addListener(listener)}
+         * @param listener a listener function that was previously registered with this GenericEventListenerHandler via 'addListener(listener)'
          */
         removeListener(listener: L);
 
         removeListenerAt(index: number);
 
         /**
-         * @param {E} event: the event to pass to the event listener functions
-         * @param {Function} customListenerCaller: a function call that takes a listener and event and should fire that event to the listener,
-         * overrides this handler default behavior {@code listener.apply(thisArg, args);}
-         * @param {Function} customListenerCallsDoneCb: a function to call when all the listeners have been called
+         * @param event: the event to pass to the event listener functions
+         * @param customListenerCaller a function call that takes a listener and event and should fire that event to the listener,
+         * overrides this handler default behavior 'listener.apply(thisArg, args)'
+         * @param customListenerCallsDoneCb: a function to call when all the listeners have been called
          */
         fireEvent(event: E, customListenerCaller?: (listener: L, args: [E], index: number, total: number) => any, customListenerCallsDoneCb?: (event: E) => void);
 

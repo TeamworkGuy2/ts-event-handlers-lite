@@ -80,7 +80,7 @@ class EventListenerList<E, L extends (...args: any[]) => void> implements Events
 
 
     /** Add a listener function that is called whenever a new customer is added to the bid via the UI
-     * @param {Function(customer, bidId)} listener: a listener function that is passed the new customer added to the bid
+     * @param listener a listener function that is passed the new customer added to the bid
      */
     public addListener(listener: L) {
         this.addNTimeListener(-1, listener);
@@ -113,7 +113,7 @@ class EventListenerList<E, L extends (...args: any[]) => void> implements Events
 
 
     /** Remove a listener function from being called whenever a new customer is added to a bid via the UI
-     * @param {Function} listener: a listener that was previously registered with this GenericEventListenerHandler via {code addListener(listener)}
+     * @param listener a listener function that was previously registered with this GenericEventListenerHandler via 'addListener(listener)'
      */
     public removeListener(listener: L) {
         if (typeof listener !== "function") {
@@ -140,7 +140,7 @@ class EventListenerList<E, L extends (...args: any[]) => void> implements Events
     /**
      * @param event: the event to pass to the event listener functions
      * @param customListenerCaller: a function call that takes a listener and event and should fire that event to the listener,
-     * overrides this handler default behavior {@code listener.apply(thisArg, args);}
+     * overrides this handler default behavior 'listener.apply(thisArg, args)'
      * @param customListenerCallsDoneCb: if provided, a function to call when all the listeners have been called, in place of 'this.fireEventsSuccessCallback'
      */
     public fireEvent(event: E, customListenerCaller?: (listener: L, args: [E], index: number, total: number) => any, customListenerCallsDoneCb?: (event: E) => void) {

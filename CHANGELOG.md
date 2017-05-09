@@ -4,7 +4,14 @@ This project does its best to adhere to [Semantic Versioning](http://semver.org/
 
 
 --------
-### [0.1.1](N/A) - 2017-04-02
+### [0.1.2](N/A) - 2017-05-09
+#### Changed
+* Updated documentation to work with Visual Studio
+* Update to TypeScript 2.3, add tsconfig.json, use @types/ definitions
+
+
+--------
+### [0.1.1](https://github.com/TeamworkGuy2/ts-event-handlers-lite/commit/b4f2dd8b94bf3abbc9e4fdfd2cbfd54f39b0e72f) - 2017-04-02
 #### Fixed
 * Fixed an issue with EventQueue not calling fireEventSuccess/Failure callbacks after reset() was called.
 
