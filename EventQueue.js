@@ -1,5 +1,5 @@
 "use strict";
-/** A generic event queue object with queueChangeEvent() and fireExistingEvents() functions
+/** A generic event queue object with queueEvent() and fireExistingEvents() functions
  * @author TeamworkGuy2
  * @param <E> the event type
  * @param <L> the listener function signature
@@ -27,9 +27,9 @@ var EventQueue = (function () {
         /** callback functions that are called when eventHandler finish fireEvent() */
         this.eventHandler.setFireEventsSuccessCallback(fireEventsSuccess);
         this.eventHandler.setFireEventsFailureCallback(fireEventsFailure);
-        this.eventValidator = (typeof eventValidator === "function" ? eventValidator : null);
+        this.eventValidator = eventValidator;
         this.getEventHandler = this.getEventHandler.bind(this);
-        this.queueChangeEvent = this.queueChangeEvent.bind(this);
+        this.queueEvent = this.queueEvent.bind(this);
         this.fireExistingEvents = this.fireExistingEvents.bind(this);
     }
     EventQueue.prototype.reset = function () {
@@ -38,6 +38,7 @@ var EventQueue = (function () {
         }
         var successCb = this.eventHandler.getFireEventsSuccessCallback();
         var failureCb = this.eventHandler.getFireEventsFailureCallback();
+        this.events = [];
         this.eventHandler.reset();
         this.eventHandler.setFireEventsSuccessCallback(successCb);
         this.eventHandler.setFireEventsFailureCallback(failureCb);
@@ -50,23 +51,26 @@ var EventQueue = (function () {
         return this.events.length > 0;
     };
     /**
-     * @see #queueChangeEvent
+     * @see #queueEvent
      * @see #fireExistingEvents
      */
-    EventQueue.prototype.queueAndFireChangeEvent = function (event, doneCb) {
-        this.queueChangeEvent(event);
+    EventQueue.prototype.queueAndFireEvent = function (event, doneCb) {
+        this.queueEvent(event);
         this.fireExistingEvents(doneCb);
     };
-    /** Add an event to this change handler's queue of current events, the event is fired after any
+    /** Add an event to this event queue's list of current events, the event is fired after any
      * currently pending events and before any future events are fired using this function.
      * However, none of these calls are made until 'fireExistingEvents()' is called
      */
-    EventQueue.prototype.queueChangeEvent = function (event) {
+    EventQueue.prototype.queueEvent = function (event) {
         if (event == null) {
             throw new Error("cannot queue null event");
         }
-        if (this.eventValidator) {
-            this.eventValidator(event);
+        if (this.eventValidator != null) {
+            var res = this.eventValidator(event);
+            if (res === false) {
+                return;
+            }
         }
         this.events.push(event);
     };

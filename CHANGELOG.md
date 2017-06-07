@@ -4,7 +4,20 @@ This project does its best to adhere to [Semantic Versioning](http://semver.org/
 
 
 --------
-### [0.1.2](N/A) - 2017-05-09
+### [0.2.0](N/A) - 2017-06-07
+#### Added
+* EventQueueTest and some additional ListenerListTest test code
+
+#### Changed
+* Renamed AsyncEventListenerList -> AsyncListenerList
+* Renamed EventListenerList -> ListenerList
+  * Renamed ListenerList.queueChangeEvent() -> queueEvent()
+  * Renamed ListenerList.queueAndFireChangeEvent() -> queueAndFireEvent()
+* Renamed test file EventListenerListTest -> ListenerListTest
+
+
+--------
+### [0.1.2](https://github.com/TeamworkGuy2/ts-event-handlers-lite/commit/3a64640c2779ba1fa50663cb7ea616d646c43ad0) - 2017-05-09
 #### Changed
 * Updated documentation to work with Visual Studio
 * Update to TypeScript 2.3, add tsconfig.json, use @types/ definitions

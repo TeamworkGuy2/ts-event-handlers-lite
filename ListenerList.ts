@@ -4,7 +4,7 @@
  * @param <E> the event type
  * @param <L> the listener function signature
  */
-class EventListenerList<E, L extends (...args: any[]) => void> implements Events.ListenerList<E, L> {
+class ListenerList<E, L extends (...args: any[]) => void> implements Events.ListenerList<E, L> {
     private listeners: L[];
     /** keeps track of the number of times that each listeners function can be called before it should be removed, -1 indicates infinite calls */
     private listenerCallsUntilRemoval: number[];
@@ -40,7 +40,7 @@ class EventListenerList<E, L extends (...args: any[]) => void> implements Events
 
 
     public setFireEventsSuccessCallback(cb: (res: any[]) => void) {
-        EventListenerList.checkCallback(cb, "fire events success");
+        ListenerList.checkCallback(cb, "fire events success");
         this.fireEventsSuccessCallback = cb;
     }
 
@@ -51,7 +51,7 @@ class EventListenerList<E, L extends (...args: any[]) => void> implements Events
 
    
     public setFireEventsFailureCallback(cb: (err) => void) {
-        EventListenerList.checkCallback(cb, "fire events failure");
+        ListenerList.checkCallback(cb, "fire events failure");
         this.fireEventsFailureCallback = cb;
     }
 
@@ -62,7 +62,7 @@ class EventListenerList<E, L extends (...args: any[]) => void> implements Events
 
 
     public setListenerAddedCallback(cb: (listener: L) => void) {
-        EventListenerList.checkCallback(cb, "fire events success");
+        ListenerList.checkCallback(cb, "fire events success");
         this.listenerAddedCallback = cb;
     }
 
@@ -74,7 +74,7 @@ class EventListenerList<E, L extends (...args: any[]) => void> implements Events
 
 
     public setListenerRemovedCallback(cb: (listener: L) => void) {
-        EventListenerList.checkCallback(cb, "fire events success");
+        ListenerList.checkCallback(cb, "fire events success");
         this.listenerRemovedCallback = cb;
     }
 
@@ -113,7 +113,7 @@ class EventListenerList<E, L extends (...args: any[]) => void> implements Events
 
 
     /** Remove a listener function from being called whenever a new customer is added to a bid via the UI
-     * @param listener a listener function that was previously registered with this GenericEventListenerHandler via 'addListener(listener)'
+     * @param listener a listener function that was previously registered with this ListenerList via 'addListener(listener)'
      */
     public removeListener(listener: L) {
         if (typeof listener !== "function") {
@@ -128,8 +128,8 @@ class EventListenerList<E, L extends (...args: any[]) => void> implements Events
 
     public removeListenerAt(index: number) {
         var listener = this.listeners[index];
-        EventListenerList.fastRemoveIndex(this.listeners, index);
-        EventListenerList.fastRemoveIndex(this.listenerCallsUntilRemoval, index);
+        ListenerList.fastRemoveIndex(this.listeners, index);
+        ListenerList.fastRemoveIndex(this.listenerCallsUntilRemoval, index);
 
         if (this.listenerRemovedCallback) {
             this.listenerRemovedCallback(listener);
@@ -233,12 +233,12 @@ class EventListenerList<E, L extends (...args: any[]) => void> implements Events
         return ary;
     }
 
-    public static newInst<E1>(): EventListenerList<E1, (event: E1) => void>;
-    public static newInst<E1, L1 extends (...args: any[]) => void>(): EventListenerList<E1, L1>;
+    public static newInst<E1>(): ListenerList<E1, (event: E1) => void>;
+    public static newInst<E1, L1 extends (...args: any[]) => void>(): ListenerList<E1, L1>;
     public static newInst<E1, L1 extends (...args: any[]) => void>() {
-        return new EventListenerList<E1, L1>();
+        return new ListenerList<E1, L1>();
     }
 
 }
 
-export = EventListenerList;
+export = ListenerList;

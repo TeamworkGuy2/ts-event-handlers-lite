@@ -12,7 +12,7 @@ declare module Events {
     }
 
 
-    /** A generic event queue object with queueChangeEvent() and fireExistingEvents() functions
+    /** A generic event queue object with queueEvent() and fireExistingEvents() functions
      */
     interface EventQueue<E, L extends (...args: any[]) => void> {
         /** temporary callbacks to call when fireExistingEventsSuccess or fireExistingEventsFailure run */
@@ -22,7 +22,7 @@ declare module Events {
         events: E[];
         eventValidator: (event: E) => void;
 
-        //new (eventHandler: EventListenerHandler<E, L>, eventValidator?: (event: E) => void): GenericEventQueue<E, L>;
+        //new (eventHandler: EventQueue<E, L>, eventValidator?: (event: E) => void): GenericEventQueue<E, L>;
 
         reset(): void;
 
@@ -32,16 +32,16 @@ declare module Events {
         hasQueuedEvents(): boolean;
 
         /**
-         * @see #queueChangeEvent
+         * @see #queueEvent
          * @see #fireExistingEvents
          */
-        queueAndFireChangeEvent(event: E, doneCb?: () => void): void;
+        queueAndFireEvent(event: E, doneCb?: () => void): void;
 
         /** Add an event to this change handler's queue of current events, the event is fired after any
          * currently pending events and before any future events are fired using this function.
          * However, none of these calls are made until 'fireExistingEvents()' is called
          */
-        queueChangeEvent(event: E): void;
+        queueEvent(event: E): void;
 
         /** Fire all current events in this event queue and call 'doneCb' when
          * all the event listeners have completed
@@ -84,7 +84,7 @@ declare module Events {
         addNTimeListener(removeAfterNCalls: number, listener: L);
 
         /** Remove a listener function from being called whenever a new customer is added to a bid via the UI
-         * @param listener a listener function that was previously registered with this GenericEventListenerHandler via 'addListener(listener)'
+         * @param listener a listener function that was previously registered with this ListenerList via 'addListener(listener)'
          */
         removeListener(listener: L);
 

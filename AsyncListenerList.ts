@@ -1,15 +1,15 @@
 ﻿import Q = require("q");
-import EventListenerList = require("./EventListenerList");
+import ListenerList = require("./ListenerList");
 
 /** An event listener list for asynchronous event listeners (i.e. the listeners perform asynchronous operations)
  * manages a list of listener functions and allows events to be sent to the listeners
  */
-class AsyncEventListenerList<E> implements Events.ListenerList<E, Events.AsyncListener<E>> {
-    private eventHandler: EventListenerList<E, Events.AsyncListener<E>>;
+class AsyncListenerList<E> implements Events.ListenerList<E, Events.AsyncListener<E>> {
+    private eventHandler: ListenerList<E, Events.AsyncListener<E>>;
 
 
     constructor() {
-        this.eventHandler = new EventListenerList<E, Events.AsyncListener<E>>();
+        this.eventHandler = new ListenerList<E, Events.AsyncListener<E>>();
     }
 
     public reset() {
@@ -105,4 +105,4 @@ class AsyncEventListenerList<E> implements Events.ListenerList<E, Events.AsyncLi
 
 }
 
-export = AsyncEventListenerList;
+export = AsyncListenerList;

@@ -1,5 +1,5 @@
 ﻿
-/** A generic event queue object with queueChangeEvent() and fireExistingEvents() functions
+/** A generic event queue object with queueEvent() and fireExistingEvents() functions
  * @author TeamworkGuy2
  * @param <E> the event type
  * @param <L> the listener function signature
@@ -11,10 +11,10 @@ class EventQueue<E, L extends (...args: any[]) => void> implements Events.EventQ
     tempErrorCb: () => void;
     tempEventCount: number = 0;
     events: E[] = [];
-    eventValidator: (event: E) => void;
+    eventValidator: (event: E) => (boolean | void);
 
 
-    constructor(eventHandler: Events.ListenerList<E, L>, eventValidator?: (event: E) => void) {
+    constructor(eventHandler: Events.ListenerList<E, L>, eventValidator?: (event: E) => (boolean | void)) {
         var that = this;
 
         function fireEventsSuccess(results) {
@@ -39,10 +39,10 @@ class EventQueue<E, L extends (...args: any[]) => void> implements Events.EventQ
         this.eventHandler.setFireEventsSuccessCallback(fireEventsSuccess);
         this.eventHandler.setFireEventsFailureCallback(fireEventsFailure);
 
-        this.eventValidator = (typeof eventValidator === "function" ? eventValidator : null);
+        this.eventValidator = eventValidator;
 
         this.getEventHandler = this.getEventHandler.bind(this);
-        this.queueChangeEvent = this.queueChangeEvent.bind(this);
+        this.queueEvent = this.queueEvent.bind(this);
         this.fireExistingEvents = this.fireExistingEvents.bind(this);
     }
 
@@ -53,6 +53,7 @@ class EventQueue<E, L extends (...args: any[]) => void> implements Events.EventQ
         }
         var successCb = this.eventHandler.getFireEventsSuccessCallback();
         var failureCb = this.eventHandler.getFireEventsFailureCallback();
+        this.events = [];
         this.eventHandler.reset();
         this.eventHandler.setFireEventsSuccessCallback(successCb);
         this.eventHandler.setFireEventsFailureCallback(failureCb);
@@ -71,23 +72,26 @@ class EventQueue<E, L extends (...args: any[]) => void> implements Events.EventQ
 
 
     /**
-     * @see #queueChangeEvent
+     * @see #queueEvent
      * @see #fireExistingEvents
      */
-    public queueAndFireChangeEvent(event: E, doneCb?: () => void) {
-        this.queueChangeEvent(event);
+    public queueAndFireEvent(event: E, doneCb?: () => void) {
+        this.queueEvent(event);
         this.fireExistingEvents(doneCb);
     }
 
 
-    /** Add an event to this change handler's queue of current events, the event is fired after any
+    /** Add an event to this event queue's list of current events, the event is fired after any
      * currently pending events and before any future events are fired using this function.
      * However, none of these calls are made until 'fireExistingEvents()' is called
      */
-    public queueChangeEvent(event: E) {
+    public queueEvent(event: E) {
         if (event == null) { throw new Error("cannot queue null event"); }
-        if (this.eventValidator) {
-            this.eventValidator(event);
+        if (this.eventValidator != null) {
+            var res = this.eventValidator(event);
+            if (res === false) {
+                return;
+            }
         }
         this.events.push(event);
     }

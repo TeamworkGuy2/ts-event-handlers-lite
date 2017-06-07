@@ -4,11 +4,11 @@
  * @param <E> the event type
  * @param <L> the listener function signature
  */
-var EventListenerList = (function () {
-    function EventListenerList() {
+var ListenerList = (function () {
+    function ListenerList() {
         this.reset();
     }
-    EventListenerList.prototype.reset = function () {
+    ListenerList.prototype.reset = function () {
         this.listeners = [];
         this.listenerCallsUntilRemoval = [];
         this.fireEventsSuccessCallback = null;
@@ -16,51 +16,51 @@ var EventListenerList = (function () {
         this.listenerAddedCallback = null;
         this.listenerRemovedCallback = null;
     };
-    EventListenerList.prototype.getListeners = function () {
+    ListenerList.prototype.getListeners = function () {
         return this.listeners;
     };
-    EventListenerList.prototype.getFireEventsSuccessCallback = function () {
+    ListenerList.prototype.getFireEventsSuccessCallback = function () {
         return this.fireEventsSuccessCallback;
     };
-    EventListenerList.prototype.setFireEventsSuccessCallback = function (cb) {
-        EventListenerList.checkCallback(cb, "fire events success");
+    ListenerList.prototype.setFireEventsSuccessCallback = function (cb) {
+        ListenerList.checkCallback(cb, "fire events success");
         this.fireEventsSuccessCallback = cb;
     };
-    EventListenerList.prototype.getFireEventsFailureCallback = function () {
+    ListenerList.prototype.getFireEventsFailureCallback = function () {
         return this.fireEventsFailureCallback;
     };
-    EventListenerList.prototype.setFireEventsFailureCallback = function (cb) {
-        EventListenerList.checkCallback(cb, "fire events failure");
+    ListenerList.prototype.setFireEventsFailureCallback = function (cb) {
+        ListenerList.checkCallback(cb, "fire events failure");
         this.fireEventsFailureCallback = cb;
     };
-    EventListenerList.prototype.getListenerAddedCallback = function () {
+    ListenerList.prototype.getListenerAddedCallback = function () {
         return this.listenerAddedCallback;
     };
-    EventListenerList.prototype.setListenerAddedCallback = function (cb) {
-        EventListenerList.checkCallback(cb, "fire events success");
+    ListenerList.prototype.setListenerAddedCallback = function (cb) {
+        ListenerList.checkCallback(cb, "fire events success");
         this.listenerAddedCallback = cb;
     };
-    EventListenerList.prototype.getListenerRemovedCallback = function () {
+    ListenerList.prototype.getListenerRemovedCallback = function () {
         return this.listenerRemovedCallback;
     };
-    EventListenerList.prototype.setListenerRemovedCallback = function (cb) {
-        EventListenerList.checkCallback(cb, "fire events success");
+    ListenerList.prototype.setListenerRemovedCallback = function (cb) {
+        ListenerList.checkCallback(cb, "fire events success");
         this.listenerRemovedCallback = cb;
     };
     /** Add a listener function that is called whenever a new customer is added to the bid via the UI
      * @param listener a listener function that is passed the new customer added to the bid
      */
-    EventListenerList.prototype.addListener = function (listener) {
+    ListenerList.prototype.addListener = function (listener) {
         this.addNTimeListener(-1, listener);
     };
-    EventListenerList.prototype.addOneTimeListener = function (listener) {
+    ListenerList.prototype.addOneTimeListener = function (listener) {
         this.addNTimeListener(1, listener);
     };
     /** Add a listener which is removed after a certain number of calls
      * @param removeAfterNCalls the number of times to call this listener before removing it, -1 indicates infinite
      * @param listener the listener function
      */
-    EventListenerList.prototype.addNTimeListener = function (removeAfterNCalls, listener) {
+    ListenerList.prototype.addNTimeListener = function (removeAfterNCalls, listener) {
         if (typeof listener !== "function") {
             throw new Error("cannot add listener " + listener);
         }
@@ -74,9 +74,9 @@ var EventListenerList = (function () {
         }
     };
     /** Remove a listener function from being called whenever a new customer is added to a bid via the UI
-     * @param listener a listener function that was previously registered with this GenericEventListenerHandler via 'addListener(listener)'
+     * @param listener a listener function that was previously registered with this ListenerList via 'addListener(listener)'
      */
-    EventListenerList.prototype.removeListener = function (listener) {
+    ListenerList.prototype.removeListener = function (listener) {
         if (typeof listener !== "function") {
             throw new Error("cannot remove listener " + listener);
         }
@@ -85,10 +85,10 @@ var EventListenerList = (function () {
             this.removeListenerAt(index);
         }
     };
-    EventListenerList.prototype.removeListenerAt = function (index) {
+    ListenerList.prototype.removeListenerAt = function (index) {
         var listener = this.listeners[index];
-        EventListenerList.fastRemoveIndex(this.listeners, index);
-        EventListenerList.fastRemoveIndex(this.listenerCallsUntilRemoval, index);
+        ListenerList.fastRemoveIndex(this.listeners, index);
+        ListenerList.fastRemoveIndex(this.listenerCallsUntilRemoval, index);
         if (this.listenerRemovedCallback) {
             this.listenerRemovedCallback(listener);
         }
@@ -99,7 +99,7 @@ var EventListenerList = (function () {
      * overrides this handler default behavior 'listener.apply(thisArg, args)'
      * @param customListenerCallsDoneCb: if provided, a function to call when all the listeners have been called, in place of 'this.fireEventsSuccessCallback'
      */
-    EventListenerList.prototype.fireEvent = function (event, customListenerCaller, customListenerCallsDoneCb) {
+    ListenerList.prototype.fireEvent = function (event, customListenerCaller, customListenerCallsDoneCb) {
         var that = this;
         var errorOccurred = false;
         var useCustomCaller = (typeof customListenerCaller === "function");
@@ -155,7 +155,7 @@ var EventListenerList = (function () {
         }
     };
     /** Check if a function argument is a non-null function */
-    EventListenerList.checkCallback = function (cb, msg) {
+    ListenerList.checkCallback = function (cb, msg) {
         if (typeof cb !== "function") {
             throw new Error(msg + " callback '" + cb + "' must be a function");
         }
@@ -167,7 +167,7 @@ var EventListenerList = (function () {
      * @param index: the index of the value to remove from the array
      * @return 'ary' of values with the specified index removed
      */
-    EventListenerList.fastRemoveIndex = function (ary, index) {
+    ListenerList.fastRemoveIndex = function (ary, index) {
         var aryLen = ary != null ? ary.length : 0;
         if (aryLen === 0) {
             return ary;
@@ -178,9 +178,9 @@ var EventListenerList = (function () {
         ary.pop();
         return ary;
     };
-    EventListenerList.newInst = function () {
-        return new EventListenerList();
+    ListenerList.newInst = function () {
+        return new ListenerList();
     };
-    return EventListenerList;
+    return ListenerList;
 }());
-module.exports = EventListenerList;
+module.exports = ListenerList;
