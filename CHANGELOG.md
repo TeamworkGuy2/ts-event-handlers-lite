@@ -4,7 +4,13 @@ This project does its best to adhere to [Semantic Versioning](http://semver.org/
 
 
 --------
-### [0.2.0](N/A) - 2017-06-07
+### [0.2.1](N/A) - 2017-08-05
+#### Changed
+* Update to TypeScript 2.4
+
+
+--------
+### [0.2.0](https://github.com/TeamworkGuy2/ts-event-handlers-lite/commit/9c3f1cb78d9ca60d80d2c9998bb22e29ff4557bb) - 2017-06-07
 #### Added
 * EventQueueTest and some additional ListenerListTest test code
 
