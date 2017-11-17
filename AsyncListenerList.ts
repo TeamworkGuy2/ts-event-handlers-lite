@@ -7,7 +7,6 @@ import ListenerList = require("./ListenerList");
 class AsyncListenerList<E> implements Events.ListenerList<E, Events.AsyncListener<E>> {
     private eventHandler: ListenerList<E, Events.AsyncListener<E>>;
 
-
     constructor() {
         this.eventHandler = new ListenerList<E, Events.AsyncListener<E>>();
     }
@@ -21,7 +20,7 @@ class AsyncListenerList<E> implements Events.ListenerList<E, Events.AsyncListene
         return this.eventHandler.getListeners();
     }
 
-    public getFireEventsSuccessCallback(): (res: any[]) => void {
+    public getFireEventsSuccessCallback(): ((res: any[]) => void) | null {
         return this.eventHandler.getFireEventsSuccessCallback();
     }
 
@@ -29,15 +28,15 @@ class AsyncListenerList<E> implements Events.ListenerList<E, Events.AsyncListene
         this.eventHandler.setFireEventsSuccessCallback(cb);
     }
 
-    public getFireEventsFailureCallback(): (err) => void {
+    public getFireEventsFailureCallback(): ((err: any) => void) | null {
         return this.eventHandler.getFireEventsFailureCallback();
     }
 
-    public setFireEventsFailureCallback(cb: (err) => void) {
+    public setFireEventsFailureCallback(cb: (err: any) => void) {
         this.eventHandler.setFireEventsFailureCallback(cb);
     }
 
-    public getListenerAddedCallback(): (listener: Events.AsyncListener<E>) => void {
+    public getListenerAddedCallback(): ((listener: Events.AsyncListener<E>) => void) | null {
         return this.eventHandler.getListenerAddedCallback();
     }
 
@@ -45,7 +44,7 @@ class AsyncListenerList<E> implements Events.ListenerList<E, Events.AsyncListene
         this.eventHandler.setListenerAddedCallback(cb);
     }
 
-    public getListenerRemovedCallback(): (listener: Events.AsyncListener<E>) => void {
+    public getListenerRemovedCallback(): ((listener: Events.AsyncListener<E>) => void) | null {
         return this.eventHandler.getListenerRemovedCallback();
     }
 

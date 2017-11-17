@@ -16,11 +16,11 @@ declare module Events {
      */
     interface EventQueue<E, L extends (...args: any[]) => void> {
         /** temporary callbacks to call when fireExistingEventsSuccess or fireExistingEventsFailure run */
-        tempDoneCb: () => void;
-        tempErrorCb: () => void;
+        tempDoneCb: (() => void) | null;
+        tempErrorCb: (() => void) | null;
         tempEventCount: number;
         events: E[];
-        eventValidator: (event: E) => void;
+        eventValidator: ((event: E) => boolean | void) | undefined;
 
         //new (eventHandler: EventQueue<E, L>, eventValidator?: (event: E) => void): GenericEventQueue<E, L>;
 
@@ -54,41 +54,41 @@ declare module Events {
      */
     interface ListenerList<E, L extends (...args: any[]) => void> {
 
-        reset();
+        reset(): void;
 
         getListeners(): L[];
 
-        getFireEventsSuccessCallback(): (res: any[]) => void;
+        getFireEventsSuccessCallback(): ((res: any[]) => void) | null;
 
-        setFireEventsSuccessCallback(cb: (res: any[]) => void);
+        setFireEventsSuccessCallback(cb: (res: any[]) => void): void;
 
-        getFireEventsFailureCallback(): (err) => void;
+        getFireEventsFailureCallback(): ((err: any) => void) | null;
 
-        setFireEventsFailureCallback(cb: (err) => void);
+        setFireEventsFailureCallback(cb: (err: any) => void): void;
 
-        getListenerAddedCallback(): (listener: L) => void;
+        getListenerAddedCallback(): ((listener: L) => void) | null;
 
-        setListenerAddedCallback(cb: (listener: L) => void);
+        setListenerAddedCallback(cb: (listener: L) => void): void;
 
-        getListenerRemovedCallback(): (listener: L) => void;
+        getListenerRemovedCallback(): ((listener: L) => void) | null;
 
-        setListenerRemovedCallback(cb: (listener: L) => void);
+        setListenerRemovedCallback(cb: (listener: L) => void): void;
 
         /** Add a listener function that is called whenever a new customer is added to the bid via the UI
          * @param listener a listener function that is passed the new customer added to the bid
          */
-        addListener(listener: L);
+        addListener(listener: L): void;
 
-        addOneTimeListener(listener: L);
+        addOneTimeListener(listener: L): void;
 
-        addNTimeListener(removeAfterNCalls: number, listener: L);
+        addNTimeListener(removeAfterNCalls: number, listener: L): void;
 
         /** Remove a listener function from being called whenever a new customer is added to a bid via the UI
          * @param listener a listener function that was previously registered with this ListenerList via 'addListener(listener)'
          */
-        removeListener(listener: L);
+        removeListener(listener: L): void;
 
-        removeListenerAt(index: number);
+        removeListenerAt(index: number): void;
 
         /**
          * @param event: the event to pass to the event listener functions
@@ -96,7 +96,7 @@ declare module Events {
          * overrides this handler default behavior 'listener.apply(thisArg, args)'
          * @param customListenerCallsDoneCb: a function to call when all the listeners have been called
          */
-        fireEvent(event: E, customListenerCaller?: (listener: L, args: [E], index: number, total: number) => any, customListenerCallsDoneCb?: (event: E) => void);
+        fireEvent(event: E, customListenerCaller?: (listener: L, args: [E], index: number, total: number) => any, customListenerCallsDoneCb?: (event: E) => void): void;
 
     }
 

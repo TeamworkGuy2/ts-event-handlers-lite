@@ -9,7 +9,7 @@
 class SingularEventHandler<E> {
     private eventHandler: ListenerList<E, Events.Listener<E>>;
     private resolved = false;
-    private resolvedEvent: E;
+    private resolvedEvent: E | null;
 
 
     constructor(eventHandler: ListenerList<E, Events.Listener<E>>) {
@@ -18,7 +18,7 @@ class SingularEventHandler<E> {
         // if the event is resolved, don't add the event listener, fire the event to the listener immediately
         this.eventHandler.setListenerAddedCallback(function (listener) {
             if (that.resolved) {
-                listener(that.resolvedEvent);
+                listener(<E>that.resolvedEvent);
                 that.eventHandler.removeListener(listener);
             }
         });

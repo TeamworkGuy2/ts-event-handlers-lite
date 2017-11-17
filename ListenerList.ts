@@ -8,10 +8,10 @@ class ListenerList<E, L extends (...args: any[]) => void> implements Events.List
     private listeners: L[];
     /** keeps track of the number of times that each listeners function can be called before it should be removed, -1 indicates infinite calls */
     private listenerCallsUntilRemoval: number[];
-    private fireEventsSuccessCallback: (res: any[]) => void;
-    private fireEventsFailureCallback: (err: any) => void;
-    private listenerAddedCallback: (listener: L) => void;
-    private listenerRemovedCallback: (listener: L) => void;
+    private fireEventsSuccessCallback: ((res: any[]) => void) | null;
+    private fireEventsFailureCallback: ((err: any) => void) | null;
+    private listenerAddedCallback: ((listener: L) => void) | null;
+    private listenerRemovedCallback: ((listener: L) => void) | null;
 
 
     constructor() {
@@ -34,7 +34,7 @@ class ListenerList<E, L extends (...args: any[]) => void> implements Events.List
     }
 
 
-    public getFireEventsSuccessCallback(): (res: any[]) => void {
+    public getFireEventsSuccessCallback(): ((res: any[]) => void) | null {
         return this.fireEventsSuccessCallback;
     }
 
@@ -45,18 +45,18 @@ class ListenerList<E, L extends (...args: any[]) => void> implements Events.List
     }
 
 
-    public getFireEventsFailureCallback(): (err) => void {
+    public getFireEventsFailureCallback(): ((err: any) => void) | null {
         return this.fireEventsFailureCallback;
     }
 
    
-    public setFireEventsFailureCallback(cb: (err) => void) {
+    public setFireEventsFailureCallback(cb: (err: any) => void) {
         ListenerList.checkCallback(cb, "fire events failure");
         this.fireEventsFailureCallback = cb;
     }
 
 
-    public getListenerAddedCallback(): (listener: L) => void {
+    public getListenerAddedCallback(): ((listener: L) => void) | null {
         return this.listenerAddedCallback;
     }
 
@@ -68,7 +68,7 @@ class ListenerList<E, L extends (...args: any[]) => void> implements Events.List
 
 
 
-    public getListenerRemovedCallback(): (listener: L) => void {
+    public getListenerRemovedCallback(): ((listener: L) => void) | null {
         return this.listenerRemovedCallback;
     }
 
@@ -149,10 +149,10 @@ class ListenerList<E, L extends (...args: any[]) => void> implements Events.List
         var useCustomCaller = (typeof customListenerCaller === "function");
 
         function callListenerProxy(listener: L, thisArg: any, args: [E], k: number, size: number) {
-            var res = null;
+            var res: any = null;
             try {
                 if (useCustomCaller) {
-                    res = customListenerCaller(listener, args, k, size);
+                    res = (<any>customListenerCaller)(listener, args, k, size);
                 }
                 else {
                     res = listener.apply(thisArg, args);
@@ -170,7 +170,7 @@ class ListenerList<E, L extends (...args: any[]) => void> implements Events.List
         }
 
         var params: [E] = [event];
-        var results = [];
+        var results: any[] = [];
 
         for (var listenerCount = that.listeners.length, i = listenerCount - 1; i > -1; i--) {
             var listener = that.listeners[i];
@@ -206,7 +206,7 @@ class ListenerList<E, L extends (...args: any[]) => void> implements Events.List
 
 
     /** Check if a function argument is a non-null function */
-    private static checkCallback(cb, msg: string) {
+    private static checkCallback(cb: any, msg: string) {
         if (typeof cb !== "function") {
             throw new Error(msg + " callback '" + cb + "' must be a function");
         }

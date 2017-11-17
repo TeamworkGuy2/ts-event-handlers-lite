@@ -9,7 +9,7 @@ suite("ListenerList", function ListenerListTest() {
 
     var createListenerList = () => ListenerList.newInst<{ chance: number; name: string }>();
 
-    var sortNames = (a, b) => (<string>a.name).localeCompare(b.name);
+    var sortNames = (a: { name: string }, b: { name: string }) => a.name.localeCompare(b.name);
 
 
     test("addListenerAndFireEvents", function addListenerAndFireEventsTest() {
@@ -84,6 +84,6 @@ suite("ListenerList", function ListenerListTest() {
 
         asr.equal(success, 2);
         asr.equal(failure, 1);
-    })
+    });
 
 });
