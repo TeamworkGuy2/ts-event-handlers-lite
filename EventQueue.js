@@ -4,7 +4,7 @@
  * @param <E> the event type
  * @param <L> the listener function signature
  */
-var EventQueue = (function () {
+var EventQueue = /** @class */ (function () {
     function EventQueue(eventHandler, eventValidator) {
         this.tempEventCount = 0;
         this.events = [];

@@ -4,7 +4,7 @@ var ListenerList = require("./ListenerList");
 /** An event listener list for asynchronous event listeners (i.e. the listeners perform asynchronous operations)
  * manages a list of listener functions and allows events to be sent to the listeners
  */
-var AsyncListenerList = (function () {
+var AsyncListenerList = /** @class */ (function () {
     function AsyncListenerList() {
         this.eventHandler = new ListenerList();
     }

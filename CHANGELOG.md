@@ -4,7 +4,14 @@ This project does its best to adhere to [Semantic Versioning](http://semver.org/
 
 
 --------
-### [0.2.2](https://github.com/TeamworkGuy2/ts-event-handlers-lite/commit/1e369d0e1abdec53b6859bac15871554fd1455b7) - 2017-11-17
+### [0.2.3](N/A) - 2018-03-01
+#### Changed
+* Update to TypeScript 2.7
+* Update dependencies: mocha, @types/chai, @types/mocha
+
+
+--------
+### [0.2.2](https://github.com/TeamworkGuy2/ts-event-handlers-lite/commit/36bef027629a680fa0be54d596032c14307ff44a) - 2017-11-17
 #### Changed
 * `tsconfig.json` added `strictNullChecks`, `noImplicitAny`, and `noImplicitThis` and setup code to support null types.
 

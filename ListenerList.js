@@ -4,7 +4,7 @@
  * @param <E> the event type
  * @param <L> the listener function signature
  */
-var ListenerList = (function () {
+var ListenerList = /** @class */ (function () {
     function ListenerList() {
         this.reset();
     }

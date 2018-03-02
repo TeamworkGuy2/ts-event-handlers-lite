@@ -5,7 +5,7 @@
  * @author TeamworkGuy2
  * @param <E> the type of event that occurs
  */
-var SingularEventHandler = (function () {
+var SingularEventHandler = /** @class */ (function () {
     function SingularEventHandler(eventHandler) {
         this.resolved = false;
         var that = this;
