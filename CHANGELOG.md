@@ -4,7 +4,15 @@ This project does its best to adhere to [Semantic Versioning](http://semver.org/
 
 
 --------
-### [0.2.3](N/A) - 2018-03-01
+### [0.2.4](N/A) - 2018-03-31
+#### Changed
+* Update to TypeScript 2.7
+* Update dependencies: @types/mocha, @types/q, and other minor version bumps
+* Update tsconfig.json with `noImplicitReturns: true` and `forceConsistentCasingInFileNames: true`
+
+
+--------
+### [0.2.3](https://github.com/TeamworkGuy2/ts-event-handlers-lite/commit/e94e881f0d98b46be6a341134a475d127773ec9e) - 2018-03-01
 #### Changed
 * Update to TypeScript 2.7
 * Update dependencies: mocha, @types/chai, @types/mocha
