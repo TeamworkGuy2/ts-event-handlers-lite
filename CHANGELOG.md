@@ -4,9 +4,18 @@ This project does its best to adhere to [Semantic Versioning](http://semver.org/
 
 
 --------
-### [0.2.4](N/A) - 2018-03-31
+### [0.2.5](N/A) - 2018-04-14
+#### Added
+* Added index.[ts|js] to follow standard npm package format, this file exports all the other classes.
+
 #### Changed
-* Update to TypeScript 2.7
+* Added release tarball and npm script `build-package` to package.json referencing external process to generate tarball
+
+
+--------
+### [0.2.4](https://github.com/TeamworkGuy2/ts-event-handlers-lite/commit/8ff5b57780be2661b07ea5c31a93fb344e6c4242) - 2018-03-31
+#### Changed
+* Update to TypeScript 2.8
 * Update dependencies: @types/mocha, @types/q, and other minor version bumps
 * Update tsconfig.json with `noImplicitReturns: true` and `forceConsistentCasingInFileNames: true`
 

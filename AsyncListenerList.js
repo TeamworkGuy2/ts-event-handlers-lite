@@ -1,8 +1,9 @@
 "use strict";
 var Q = require("q");
 var ListenerList = require("./ListenerList");
-/** An event listener list for asynchronous event listeners (i.e. the listeners perform asynchronous operations)
- * manages a list of listener functions and allows events to be sent to the listeners
+/** An event listener list for asynchronous event listeners (i.e. the listeners perform asynchronous operations).
+ * Manages a list of listener functions and allows events to be sent to the listeners.
+ * When a listener is called, the event and a new Q.Deferred is passed to the function and the function resolves/rejects the deferred.
  */
 var AsyncListenerList = /** @class */ (function () {
     function AsyncListenerList() {
