@@ -24,10 +24,12 @@ var EventQueue = /** @class */ (function () {
             }
         }
         this.eventHandler = eventHandler;
+        this.tempDoneCb = null;
+        this.tempErrorCb = null;
         /** callback functions that are called when eventHandler finish fireEvent() */
         this.eventHandler.setFireEventsSuccessCallback(fireEventsSuccess);
         this.eventHandler.setFireEventsFailureCallback(fireEventsFailure);
-        this.eventValidator = eventValidator;
+        this.eventValidator = eventValidator || null;
         this.getEventHandler = this.getEventHandler.bind(this);
         this.queueEvent = this.queueEvent.bind(this);
         this.fireExistingEvents = this.fireExistingEvents.bind(this);

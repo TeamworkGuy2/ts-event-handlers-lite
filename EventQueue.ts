@@ -11,7 +11,7 @@ class EventQueue<E, L extends (...args: any[]) => void> implements Events.EventQ
     tempErrorCb: (() => void) | null;
     tempEventCount: number = 0;
     events: E[] = [];
-    eventValidator: ((event: E) => boolean | void) | undefined;
+    eventValidator: ((event: E) => boolean | void) | null;
 
 
     constructor(eventHandler: Events.ListenerList<E, L>, eventValidator?: (event: E) => boolean | void) {
@@ -34,12 +34,14 @@ class EventQueue<E, L extends (...args: any[]) => void> implements Events.EventQ
         }
 
         this.eventHandler = eventHandler;
+        this.tempDoneCb = null;
+        this.tempErrorCb = null;
 
         /** callback functions that are called when eventHandler finish fireEvent() */
         this.eventHandler.setFireEventsSuccessCallback(fireEventsSuccess);
         this.eventHandler.setFireEventsFailureCallback(fireEventsFailure);
 
-        this.eventValidator = eventValidator;
+        this.eventValidator = eventValidator || null;
 
         this.getEventHandler = this.getEventHandler.bind(this);
         this.queueEvent = this.queueEvent.bind(this);

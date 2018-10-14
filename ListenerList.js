@@ -6,7 +6,13 @@
  */
 var ListenerList = /** @class */ (function () {
     function ListenerList() {
-        this.reset();
+        // same as reset() to appease typescript 'strict'
+        this.listeners = [];
+        this.listenerCallsUntilRemoval = [];
+        this.fireEventsSuccessCallback = null;
+        this.fireEventsFailureCallback = null;
+        this.listenerAddedCallback = null;
+        this.listenerRemovedCallback = null;
     }
     ListenerList.prototype.reset = function () {
         this.listeners = [];

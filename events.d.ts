@@ -20,7 +20,7 @@ declare module Events {
         tempErrorCb: (() => void) | null;
         tempEventCount: number;
         events: E[];
-        eventValidator: ((event: E) => boolean | void) | undefined;
+        eventValidator: ((event: E) => boolean | void) | null;
 
         //new (eventHandler: EventQueue<E, L>, eventValidator?: (event: E) => void): GenericEventQueue<E, L>;
 

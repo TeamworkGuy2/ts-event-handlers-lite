@@ -15,7 +15,13 @@ class ListenerList<E, L extends (...args: any[]) => void> implements Events.List
 
 
     constructor() {
-        this.reset();
+        // same as reset() to appease typescript 'strict'
+        this.listeners = [];
+        this.listenerCallsUntilRemoval = [];
+        this.fireEventsSuccessCallback = null;
+        this.fireEventsFailureCallback = null;
+        this.listenerAddedCallback = null;
+        this.listenerRemovedCallback = null;
     }
 
 

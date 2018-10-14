@@ -4,7 +4,14 @@ This project does its best to adhere to [Semantic Versioning](http://semver.org/
 
 
 --------
-### [0.2.5](N/A) - 2018-04-14
+### [0.2.6](N/A) - 2018-10-13
+#### Changed
+* Update to TypeScript 3.1
+* Enable `tsconfig.json` `strict` option and add explicit constructor property initialization to fix compile errors
+
+
+--------
+### [0.2.5](https://github.com/TeamworkGuy2/ts-event-handlers-lite/commit/35e6fd5b5828b6d1ac6e735f8513c7e3c010a211) - 2018-04-14
 #### Added
 * Added index.[ts|js] to follow standard npm package format, this file exports all the other classes.
 

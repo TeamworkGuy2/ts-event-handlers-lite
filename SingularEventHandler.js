@@ -10,6 +10,7 @@ var SingularEventHandler = /** @class */ (function () {
         this.resolved = false;
         var that = this;
         this.eventHandler = eventHandler;
+        this.resolvedEvent = null;
         // if the event is resolved, don't add the event listener, fire the event to the listener immediately
         this.eventHandler.setListenerAddedCallback(function (listener) {
             if (that.resolved) {
