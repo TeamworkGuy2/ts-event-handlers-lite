@@ -4,10 +4,20 @@ This project does its best to adhere to [Semantic Versioning](http://semver.org/
 
 
 --------
-### [0.2.6](N/A) - 2018-10-13
+### [0.2.7](N/A) - 2018-12-29
+#### Changed
+* Update to TypeScript 3.2
+* Update @types dependencies
+* Remove `tsconfig.json lib "dom"` option since only usage was `console` which is also available in Node.js environments
+
+
+--------
+### [0.2.6](https://github.com/TeamworkGuy2/ts-event-handlers-lite/commit/ede94040fe6a8dceadbe3958c51641a05b7ad92f) - 2018-10-13
 #### Changed
 * Update to TypeScript 3.1
+* Update dev dependencies and @types
 * Enable `tsconfig.json` `strict` option and add explicit constructor property initialization to fix compile errors
+* Removed compiled bin tarball in favor of git tags and github releases
 
 
 --------

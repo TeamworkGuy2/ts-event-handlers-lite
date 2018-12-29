@@ -1,5 +1,7 @@
 ﻿import ListenerList = require("./ListenerList");
 
+declare var console: { log(...msgs: any[]): void; error(...msgs: any[]): void };
+
 /** An event handler that handles a single event, i.e. similar to jquery.ready(...).
  * Listeners that are added before the event occurs are called when the event occurs.
  * Listeners that are added after the event occurs are called immediately.

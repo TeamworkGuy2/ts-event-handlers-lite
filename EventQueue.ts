@@ -1,4 +1,6 @@
 ﻿
+declare var console: { log(...msgs: any[]): void; error(...msgs: any[]): void };
+
 /** A generic event queue object with queueEvent() and fireExistingEvents() functions
  * @author TeamworkGuy2
  * @param <E> the event type
