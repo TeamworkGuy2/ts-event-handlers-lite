@@ -4,7 +4,13 @@ This project does its best to adhere to [Semantic Versioning](http://semver.org/
 
 
 --------
-### [0.2.7](N/A) - 2018-12-29
+### [0.2.8](N/A) - 2019-07-06
+#### Changed
+* Update to TypeScript 3.5
+
+
+--------
+### [0.2.7](https://github.com/TeamworkGuy2/ts-event-handlers-lite/commit/6c732fef9ded62c5538dc992c2826d68b513b8a8) - 2018-12-29
 #### Changed
 * Update to TypeScript 3.2
 * Update @types dependencies
