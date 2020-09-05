@@ -1,6 +1,6 @@
 {
   "name": "ts-event-handlers-lite",
-  "version": "0.2.9",
+  "version": "0.3.0",
   "description": "TypeScript event listener management - synchronous, asynchronous, event queuing, and more",
   "author": "TeamworkGuy2",
   "homepage": "https://github.com/TeamworkGuy2/ts-event-handlers-lite",
@@ -19,7 +19,7 @@
     "@types/q": "~1.5.1",
     "chai": "~4.2.0",
     "mocha": "~5.2.0",
-    "typescript": "~3.7.2"
+    "typescript": "~4.0.2"
   },
   "scripts": {
     "test": "node node_modules/mocha/bin/_mocha -u tdd --recursive",
