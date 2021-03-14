@@ -4,7 +4,13 @@ This project does its best to adhere to [Semantic Versioning](http://semver.org/
 
 
 --------
-### [0.4.0](N/A) - 2021-03-13
+### [0.4.1](N/A) - 2021-03-14
+#### Changed
+* Update documentation regarding 'Q' dependency and remove 'Q' type import from `events.d.ts`
+
+
+--------
+### [0.4.0](https://github.com/TeamworkGuy2/ts-event-handlers-lite/commit/d12c0232ee37793632e2507ae49d754e14f3c16d) - 2021-03-13
 #### Changed
 * Removed `Q` dependency
 * Added `promiseStatic` parameter to `AsyncListenerList` constructor to replace/remove `Q` dependency

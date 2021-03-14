@@ -1,6 +1,6 @@
 {
   "name": "ts-event-handlers-lite",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "TypeScript event listener management - synchronous, asynchronous, event queuing, and more",
   "author": "TeamworkGuy2",
   "homepage": "https://github.com/TeamworkGuy2/ts-event-handlers-lite",

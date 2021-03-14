@@ -1,5 +1,4 @@
-﻿/// <reference types="q" />
-
+﻿
 declare module Events {
 
     interface IDeferred<T> {
