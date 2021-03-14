@@ -1,10 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var chai = require("chai");
-var ListenerList = require("../ListenerList");
+var Q = require("q");
+var AsyncListenerList = require("../AsyncListenerList");
 var asr = chai.assert;
-suite("ListenerList", function ListenerListTest() {
-    var createListenerList = function () { return ListenerList.newInst(); };
+suite("AsyncListenerList", function AsyncListenerListTest() {
+    var createListenerList = function () { return new AsyncListenerList({
+        defer: Q.defer,
+        all: Q.all,
+    }); };
     var sortNames = function (a, b) { return a.name.localeCompare(b.name); };
     test("addListenerAndFireEvents", function addListenerAndFireEventsTest() {
         var ell = createListenerList();
@@ -49,17 +53,22 @@ suite("ListenerList", function ListenerListTest() {
         asr.equal(added, 3);
         asr.equal(removed, 1);
     });
-    test("fireEvents", function fireEventsTest() {
+    test("fireEvents", function fireEventsTest(cb) {
         var ell = createListenerList();
         var success = 0;
         var failure = 0;
+        var lC = 0;
         ell.setFireEventsSuccessCallback(function () { return success++; });
         ell.setFireEventsFailureCallback(function () { return failure++; });
-        ell.addListener(function (evt) { return evt.chance; });
-        ell.fireEvent({ name: "1", chance: 0.1 });
-        ell.fireEvent({ name: "3", chance: 0.3 });
-        ell.fireEvent({ name: "1", get chance() { throw new Error("event 3 failure"); } });
-        asr.equal(success, 2);
-        asr.equal(failure, 1);
+        ell.addListener(function (dfd, evt) { lC++; dfd.resolve(evt.chance); });
+        ell.fireEvent({ name: "a1", chance: 0.1 });
+        ell.fireEvent({ name: "a2", get chance() { throw new Error("event a3 failure"); } });
+        ell.fireEvent({ name: "a3", chance: 0.3 });
+        setTimeout(function () {
+            asr.equal(lC, 3);
+            asr.equal(success, 2);
+            asr.equal(failure, 1);
+            cb();
+        }, 100);
     });
 });

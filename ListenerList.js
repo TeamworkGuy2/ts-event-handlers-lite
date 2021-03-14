@@ -142,9 +142,6 @@ var ListenerList = /** @class */ (function () {
             var res = null;
             if (typeof listener === "function") {
                 res = callListenerProxy(listener, undefined, params, i, listenerCount);
-                if (errorOccurred) {
-                    break;
-                }
             }
             results.push(res);
             if (remainingCallCount === 0) {

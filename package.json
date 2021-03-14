@@ -1,6 +1,6 @@
 {
   "name": "ts-event-handlers-lite",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "TypeScript event listener management - synchronous, asynchronous, event queuing, and more",
   "author": "TeamworkGuy2",
   "homepage": "https://github.com/TeamworkGuy2/ts-event-handlers-lite",
@@ -10,15 +10,14 @@
     "type": "git",
     "url": "https://github.com/TeamworkGuy2/ts-event-handlers-lite.git"
   },
-  "dependencies": {
-    "q": "~1.5.1"
-  },
+  "dependencies": { },
   "devDependencies": {
     "@types/chai": "~4.2.4",
     "@types/mocha": "~5.2.7",
     "@types/q": "~1.5.1",
     "chai": "~4.2.0",
     "mocha": "~5.2.0",
+    "q": "~1.5.1",
     "typescript": "~4.0.2"
   },
   "scripts": {

@@ -4,7 +4,15 @@ This project does its best to adhere to [Semantic Versioning](http://semver.org/
 
 
 --------
-### [0.3.0](N/A) - 2020-09-04
+### [0.4.0](N/A) - 2021-03-13
+#### Changed
+* Removed `Q` dependency
+* Added `promiseStatic` parameter to `AsyncListenerList` constructor to replace/remove `Q` dependency
+* `ListenerList` no longer stops calling event listeners when one fails, all event listeners are called
+
+
+--------
+### [0.3.0](https://github.com/TeamworkGuy2/ts-event-handlers-lite/commit/bb6b848c4994b1986a5384b44b69a916b5885037) - 2020-09-04
 #### Changed
 * Update to TypeScript 4.0
 

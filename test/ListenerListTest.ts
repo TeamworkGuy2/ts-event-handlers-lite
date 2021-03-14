@@ -4,7 +4,6 @@ import ListenerList = require("../ListenerList");
 
 var asr = chai.assert;
 
-
 suite("ListenerList", function ListenerListTest() {
 
     var createListenerList = () => ListenerList.newInst<{ chance: number; name: string }>();
@@ -47,22 +46,22 @@ suite("ListenerList", function ListenerListTest() {
         var aC = 0;
         var bC = 0;
         var cC = 0;
-        var lstA = function a() { aC++; };
-        var lstB = function b() { bC++; };
-        var lstC = function c() { cC++; };
+        var listenerA = function a() { aC++; };
+        var listenerB = function b() { bC++; };
+        var listenerC = function c() { cC++; };
 
         ell.setListenerAddedCallback(() => added++);
         ell.setListenerRemovedCallback(() => removed++);
 
-        ell.addListener(lstA);
-        ell.addListener(lstB);
+        ell.addListener(listenerA);
+        ell.addListener(listenerB);
 
-        asr.deepEqual(ell.getListeners().sort(sortNames), [lstA, lstB]);
+        asr.deepEqual(ell.getListeners().sort(sortNames), [listenerA, listenerB]);
 
-        ell.removeListener(lstA);
-        ell.addListener(lstC);
+        ell.removeListener(listenerA);
+        ell.addListener(listenerC);
 
-        asr.deepEqual(ell.getListeners().sort(sortNames), [lstB, lstC]);
+        asr.deepEqual(ell.getListeners().sort(sortNames), [listenerB, listenerC]);
 
         asr.equal(added, 3);
         asr.equal(removed, 1);

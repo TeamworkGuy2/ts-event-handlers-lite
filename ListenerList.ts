@@ -189,9 +189,6 @@ class ListenerList<E, L extends (...args: any[]) => void> implements Events.List
             var res = null;
             if (typeof listener === "function") {
                 res = callListenerProxy(listener, undefined, params, i, listenerCount);
-                if (errorOccurred) {
-                    break;
-                }
             }
             results.push(res);
 

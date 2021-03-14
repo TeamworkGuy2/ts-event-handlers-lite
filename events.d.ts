@@ -2,13 +2,36 @@
 
 declare module Events {
 
-    export interface Listener<E> {
+    interface IDeferred<T> {
+        promise: Promise<T>;
+
+        /** Calling resolve with a pending promise causes promise to wait on the passed promise, becoming fulfilled with its
+         * fulfillment value or rejected with its rejection reason (or staying pending forever, if the passed promise does).
+         * Calling resolve with a rejected promise causes promise to be rejected with the passed promise's rejection reason.
+         * Calling resolve with a fulfilled promise causes promise to be fulfilled with the passed promise's fulfillment value.
+         * Calling resolve with a non-promise value causes promise to be fulfilled with that value.
+         */
+        resolve(value?: PromiseLike<T> | T): void;
+
+        /** Calling reject with a reason causes promise to be rejected with that reason.
+         */
+        reject(reason?: any): void;
+    }
+
+
+    interface PromiseStatic {
+        defer: <T>() => IDeferred<T>;
+        all: <T>(values: Iterable<T | PromiseLike<T>>) => Promise<T[]>;
+    }
+
+
+    interface Listener<E> {
         (event: E): void;
     }
 
 
-    export interface AsyncListener<E> {
-        (promise: Q.Deferred<any>, event: E): void;
+    interface AsyncListener<E> {
+        (deferred: IDeferred<any>, event: E): void;
     }
 
 

@@ -1,5 +1,4 @@
-﻿import Q = require("q");
-import ListenerList = require("./ListenerList");
+﻿import ListenerList = require("./ListenerList");
 
 /** An event listener list for asynchronous event listeners (i.e. the listeners perform asynchronous operations).
  * Manages a list of listener functions and allows events to be sent to the listeners.
@@ -7,9 +6,11 @@ import ListenerList = require("./ListenerList");
  */
 class AsyncListenerList<E> implements Events.ListenerList<E, Events.AsyncListener<E>> {
     private eventHandler: ListenerList<E, Events.AsyncListener<E>>;
+    private promiseStatic: Events.PromiseStatic;
 
-    constructor() {
+    constructor(promiseStatic: Events.PromiseStatic) {
         this.eventHandler = new ListenerList<E, Events.AsyncListener<E>>();
+        this.promiseStatic = promiseStatic;
     }
 
     public reset() {
@@ -77,21 +78,22 @@ class AsyncListenerList<E> implements Events.ListenerList<E, Events.AsyncListene
     /**
      * @param event: the event object being fired to listeners
      */
-    public fireEvent(event: E, customListenerCaller?: (listener: Events.AsyncListener<E>, args: [E], index: number, total: number) => any, customListenerCallsDoneCb?: (event: E) => void) {
+    public fireEvent(event: E) {
+        var promiseImpl = this.promiseStatic;
         var fireEventsSuccessCallback = this.getFireEventsSuccessCallback();
         var fireEventsFailureCallback = this.getFireEventsFailureCallback();
-        var dfds: Q.Promise<any>[] = [];
+        var dfds: PromiseLike<any>[] = [];
 
         this.eventHandler.fireEvent(event, function asyncListenerCaller(listener, event, index, size) {
-            var dfd = Q.defer<any>();
+            var dfd = promiseImpl.defer<any>();
             dfds.push(dfd.promise);
             listener(dfd, event[0]);
         }, function asyncListenerAwaiter() {
-            Q.all(dfds).done(function (results) {
+            promiseImpl.all(dfds).then(function (results) {
                 if (typeof fireEventsSuccessCallback === "function") {
                     fireEventsSuccessCallback(results);
                 }
-            }, function (err) {
+            }).catch(function (err) {
                 if (typeof fireEventsFailureCallback === "function") {
                     fireEventsFailureCallback(err);
                 }

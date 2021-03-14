@@ -1,13 +1,13 @@
 "use strict";
-var Q = require("q");
 var ListenerList = require("./ListenerList");
 /** An event listener list for asynchronous event listeners (i.e. the listeners perform asynchronous operations).
  * Manages a list of listener functions and allows events to be sent to the listeners.
  * When a listener is called, the event and a new Q.Deferred is passed to the function and the function resolves/rejects the deferred.
  */
 var AsyncListenerList = /** @class */ (function () {
-    function AsyncListenerList() {
+    function AsyncListenerList(promiseStatic) {
         this.eventHandler = new ListenerList();
+        this.promiseStatic = promiseStatic;
     }
     AsyncListenerList.prototype.reset = function () {
         this.eventHandler.reset();
@@ -58,20 +58,21 @@ var AsyncListenerList = /** @class */ (function () {
     /**
      * @param event: the event object being fired to listeners
      */
-    AsyncListenerList.prototype.fireEvent = function (event, customListenerCaller, customListenerCallsDoneCb) {
+    AsyncListenerList.prototype.fireEvent = function (event) {
+        var promiseImpl = this.promiseStatic;
         var fireEventsSuccessCallback = this.getFireEventsSuccessCallback();
         var fireEventsFailureCallback = this.getFireEventsFailureCallback();
         var dfds = [];
         this.eventHandler.fireEvent(event, function asyncListenerCaller(listener, event, index, size) {
-            var dfd = Q.defer();
+            var dfd = promiseImpl.defer();
             dfds.push(dfd.promise);
             listener(dfd, event[0]);
         }, function asyncListenerAwaiter() {
-            Q.all(dfds).done(function (results) {
+            promiseImpl.all(dfds).then(function (results) {
                 if (typeof fireEventsSuccessCallback === "function") {
                     fireEventsSuccessCallback(results);
                 }
-            }, function (err) {
+            }).catch(function (err) {
                 if (typeof fireEventsFailureCallback === "function") {
                     fireEventsFailureCallback(err);
                 }
