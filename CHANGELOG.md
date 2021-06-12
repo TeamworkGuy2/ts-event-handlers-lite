@@ -4,7 +4,13 @@ This project does its best to adhere to [Semantic Versioning](http://semver.org/
 
 
 --------
-### [0.4.1](N/A) - 2021-03-14
+### [0.5.0](N/A) - 2021-06-12
+#### Changed
+* Update to TypeScript 4.3
+
+
+--------
+### [0.4.1](https://github.com/TeamworkGuy2/ts-event-handlers-lite/commit/acdede14afa09e81a172717e31383b2b8e031f6b) - 2021-03-14
 #### Changed
 * Update documentation regarding 'Q' dependency and remove 'Q' type import from `events.d.ts`
 
