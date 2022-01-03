@@ -169,7 +169,7 @@ class ListenerList<E, L extends (...args: any[]) => void> implements Events.List
                     that.fireEventsFailureCallback(err);
                 }
                 else {
-                    throw new Error(err);
+                    throw new Error(<any>err);
                 }
             }
             return res;
